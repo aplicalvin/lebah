@@ -18,7 +18,7 @@ def create_db():
     
     # Membuat tabel akun (nomor akun dan nama rekening)
     c.execute('''CREATE TABLE IF NOT EXISTS akun (
-                    id_akun TEXT PRIMARY KEY,
+                    id_akun INTEGER PRIMARY KEY AUTOINCREMENT  ,
                     no_akun TEXT,
                     nama_rekening,
                     beban INTEGER)''')
