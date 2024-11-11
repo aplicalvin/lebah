@@ -42,10 +42,19 @@ def tampilkan_data(tree_frame, account_number):
         tree.heading(col, text=col)
     tree.pack(pady=10)
 
-    # Isi data ke dalam tabel
+    # Hitung saldo berdasarkan transaksi
+    saldo_terakhir = 0  # Misalnya saldo awal 0
     for row in data:
+        # Menentukan debit dan kredit
+        debit = row[5]
+        kredit = row[6]
+
+        # Hitung updt_saldo
+        saldo_terakhir += debit  # Tambahkan saldo debit
+        saldo_terakhir -= kredit  # Kurangi saldo kredit
+
         # Menampilkan data yang sesuai: Tanggal, Keterangan, Ref, Debit, Kredit, Saldo
-        tree.insert('', 'end', values=(row[1], row[3], "JU", row[5], row[6], row[7]))  # Menambahkan upd_saldo di kolom ke-6
+        tree.insert('', 'end', values=(row[1], row[3], "JU", debit, kredit, saldo_terakhir))  # Menambahkan upd_saldo di kolom ke-6
 
     # Hitung total debit dan kredit
     total_debit, total_kredit = hitung_total(data)
@@ -75,7 +84,7 @@ def create_page(parent):
     header = tk.Label(parent, text="Buku Besar", font=("Arial", 18), bg="sky blue", anchor="w", padx=20)
     header.pack(fill="x", pady=10)
 
-    # Buat canvas dan scrollbar untuk menggulir seluruh halaman
+    # Buat canvas dan scrollbar untuk menggulir seluruh halaman 
     canvas = tk.Canvas(parent)
     scrollbar = tk.Scrollbar(parent, orient="vertical", command=canvas.yview)
     canvas.configure(yscrollcommand=scrollbar.set)
